@@ -13,7 +13,7 @@
         android:layout_margin="8dp">
 
         <TextView
-            android:id="@+id/data"
+            android:id="@+id/data_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/data_text1"
@@ -26,8 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/capture_btn"
@@ -43,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_weight="1"
-            android:text="Copy Text" />
+            android:text="Copy Text"
+            android:visibility="gone" />
     </LinearLayout>
 
 </RelativeLayout>
