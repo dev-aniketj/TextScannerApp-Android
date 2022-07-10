@@ -1,6 +1,7 @@
 package com.aniketjain.textscanner;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private static final int REQUEST_CAMERA_CODE = 100;
-    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClickListeners() {
-        binding.captureBtn.setOnClickListener(view -> {
-            CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).start(this);
-        });
+        binding.captureBtn.setOnClickListener(view -> CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).start(this));
         binding.copyBtn.setOnClickListener(view -> {
             String scanned_text = binding.dataTv.getText().toString();
             copyToClipBoard(scanned_text);
@@ -74,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri uri = (result != null) ? result.getUri() : null;
                 try {
-                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                     getTextFromImage(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -88,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void getTextFromImage(Bitmap bitmap) {
         TextRecognizer recognizer = new TextRecognizer.Builder(this).build();
         if (!recognizer.isOperational()) {

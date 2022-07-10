@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name">Text Scanner</string>
-    <string name="data_text1"><b>Hello</b>, capture or choose an image from gallery to scanner the text from the picture.</string>
 </resources>
